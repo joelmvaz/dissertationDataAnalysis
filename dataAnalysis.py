@@ -34,3 +34,6 @@ for driverId in data:
         print("Trip Id: " + tripId) #Prints the Trip Ids
         for dataSet in data.get(driverId).get(tripId):
             print("Data Set: " + dataSet)
+            for sensorsLst in data.get(driverId).get(tripId).get(dataSet):
+                print("Sensor: " + sensorsLst)
+                print(data.get(driverId).get(tripId).get(dataSet).get(sensorsLst))

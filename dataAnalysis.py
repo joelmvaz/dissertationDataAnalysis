@@ -12,6 +12,13 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import json
 
+accX= []
+accY= []
+accZ= []
+lat= []
+longi= []
+speed= []
+time= []
 #Hard Coded file name
 #File must be in the same folder as script
 filename= "droid-data-export.json"
@@ -28,12 +35,44 @@ with open(filename, 'r') as f:
 
 #
 ##
+
 for driverId in data:
     print("Driver' Id: " + driverId) #Prints the Driver ids
     for tripId in data.get(driverId):
         print("Trip Id: " + tripId) #Prints the Trip Ids
         for dataSet in data.get(driverId).get(tripId):
-            print("Data Set: " + dataSet)
+            print("\n" + "Data Set: " + dataSet + "\n")
             for sensorsLst in data.get(driverId).get(tripId).get(dataSet):
                 print("Sensor: " + sensorsLst)
                 print(data.get(driverId).get(tripId).get(dataSet).get(sensorsLst))
+
+                if(sensorsLst=="acceleration_x"):
+                    accX.append(data.get(driverId).get(tripId).get(dataSet).get(sensorsLst))
+                if(sensorsLst=="acceleration_y"):
+                    accY.append(data.get(driverId).get(tripId).get(dataSet).get(sensorsLst))
+                if(sensorsLst=="acceleration_z"):
+                    accZ.append(data.get(driverId).get(tripId).get(dataSet).get(sensorsLst))
+                if(sensorsLst=="latitude"):
+                    lat.append(data.get(driverId).get(tripId).get(dataSet).get(sensorsLst))
+                if(sensorsLst=="longitude"):
+                    longi.append(data.get(driverId).get(tripId).get(dataSet).get(sensorsLst))
+                if(sensorsLst=="speed"):
+                    speed.append(data.get(driverId).get(tripId).get(dataSet).get(sensorsLst))
+                if(sensorsLst=="time"):
+                    time.append(data.get(driverId).get(tripId).get(dataSet).get(sensorsLst))
+        ## This break represents a trip by the driver with id 1 
+        break
+    break
+
+print(accX)
+print("\n")
+print(accY)
+print("\n")
+print(lat)
+print("\n")
+print(longi)
+print("\n")
+print(speed)
+print("\n")
+print(time)
+print("\n")

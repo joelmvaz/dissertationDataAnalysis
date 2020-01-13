@@ -10,6 +10,7 @@ import sys #Allows argv[] use
 import numpy as np 
 import pandas as pd
 import matplotlib.pyplot as plt
+import seaborn as sns 
 import json
 
 accX= []
@@ -19,6 +20,7 @@ lat= []
 longi= []
 speed= []
 time= []
+timePlt= []
 #Hard Coded file name
 #File must be in the same folder as script
 filename= "droid-data-export.json"
@@ -37,14 +39,14 @@ with open(filename, 'r') as f:
 ##
 
 for driverId in data:
-    print("Driver' Id: " + driverId) #Prints the Driver ids
+    #print("Driver' Id: " + driverId) #Prints the Driver ids
     for tripId in data.get(driverId):
-        print("Trip Id: " + tripId) #Prints the Trip Ids
+        #print("Trip Id: " + tripId) #Prints the Trip Ids
         for dataSet in data.get(driverId).get(tripId):
-            print("\n" + "Data Set: " + dataSet + "\n")
+            #print("\n" + "Data Set: " + dataSet + "\n")
             for sensorsLst in data.get(driverId).get(tripId).get(dataSet):
-                print("Sensor: " + sensorsLst)
-                print(data.get(driverId).get(tripId).get(dataSet).get(sensorsLst))
+                #print("Sensor: " + sensorsLst)
+                #print(data.get(driverId).get(tripId).get(dataSet).get(sensorsLst))
 
                 if(sensorsLst=="acceleration_x"):
                     accX.append(data.get(driverId).get(tripId).get(dataSet).get(sensorsLst))
@@ -60,19 +62,20 @@ for driverId in data:
                     speed.append(data.get(driverId).get(tripId).get(dataSet).get(sensorsLst))
                 if(sensorsLst=="time"):
                     time.append(data.get(driverId).get(tripId).get(dataSet).get(sensorsLst))
+
+                #Save plot part on folder with driver id, with trip id as figure name
+
+                #Reset lists with data
+
         ## This break represents a trip by the driver with id 1 
         break
     break
 
-print(accX)
-print("\n")
-print(accY)
-print("\n")
-print(lat)
-print("\n")
-print(longi)
-print("\n")
-print(speed)
-print("\n")
-print(time)
-print("\n")
+plt.figure()
+plt.plot(np.arange(0, len(time), 1).tolist(), accX)
+plt.xticks(rotation=45, ha='right')
+plt.title('Acceleartion X over time stamp')
+plt.ylabel('Acceleration (m.s2)')
+plt.xlabel('Time Stamp')
+
+plt.show()

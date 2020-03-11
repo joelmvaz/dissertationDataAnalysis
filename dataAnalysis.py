@@ -35,7 +35,7 @@ time= []
 timePlt= []
 #Hard Coded file name
 #File must be in the same folder as script
-filename= "droid-data-export.json"
+filename= "droid-data-export-2020.json"
 
 with open(filename, 'r') as f:
     data= json.load(f)
@@ -51,8 +51,18 @@ with open(filename, 'r') as f:
 ##
 
 for driverId in data:
+
+    # Create new directory
+    output_dir= driverId
+    mkdir_p("Plots2020/" + output_dir)
+
     for tripId in data.get(driverId):
+        
+        mkdir_p("Plots2020/" + output_dir + "/" + tripId)
+        print("Directory Created\n")
+
         for dataSet in data.get(driverId).get(tripId):
+
             for sensorsLst in data.get(driverId).get(tripId).get(dataSet):
                 if(sensorsLst=="acceleration_x"):
                     accX.append(data.get(driverId).get(tripId).get(dataSet).get(sensorsLst))
@@ -68,48 +78,51 @@ for driverId in data:
                     speed.append(data.get(driverId).get(tripId).get(dataSet).get(sensorsLst))
                 if(sensorsLst=="time"):
                     time.append(data.get(driverId).get(tripId).get(dataSet).get(sensorsLst))
+                if(sensorsLst=="label"):
+                    print(data.get(driverId).get(tripId).get(dataSet).get(sensorsLst))
+                    if(data.get(driverId).get(tripId).get(dataSet).get(sensorsLst)=="good"):
+                        print("We are getting somewhere\n")
 
         ## This break represents a trip by the driver with id 1 
-        break
+        #break
 
-    #Save plot part on folder with driver id, with trip id as figure name
-    plt.figure()
-    plt.xticks(rotation=45, ha='right')
-    plt.plot(np.arange(0, len(time), 1).tolist(), accX)
-    plt.title('Acceleartion X over time stamp')
-    plt.xlabel('Time Stamp')
+        #Save plot part on folder with driver id, with trip id as figure name
+        plt.figure()
+        plt.xticks(rotation=45, ha='right')
+        plt.plot(np.arange(0, len(time), 1).tolist(), accX)
+        plt.title('Acceleartion X over time stamp')
+        plt.xlabel('Time Stamp')
 
     # Create new directory
-    output_dir= driverId
-    mkdir_p("Plots/" + output_dir)
-
-    plt.savefig("Plots/" + driverId + "/accX.png")
-    plt.clf()
-
-    plt.plot(np.arange(0, len(time), 1).tolist(), accY)
-    plt.title('Acceleartion Y over time stamp')
-    plt.xlabel('Time Stamp')
-    plt.savefig("Plots/" + driverId + "/accY.png")
-    plt.clf()
-
-    plt.plot(np.arange(0, len(time), 1).tolist(), accZ)
-    plt.title('Acceleartion Z over time stamp')
-    plt.xlabel('Time Stamp')
-    plt.savefig("Plots/" + driverId + "/accZ.png")
-    plt.clf()
-
-    if(speed):
-        plt.plot(np.arange(0, len(time), 1).tolist(), speed)
-        plt.title('Speed over time stamp')
-        plt.xlabel('Time Stamp')
-        plt.savefig("Plots/" + driverId + "/speed.png")
+    #output_dir= driverId
+    #mkdir_p("Plots2020/" + output_dir)
+        plt.savefig("Plots2020/" + driverId + "/" + tripId +"/accX.png")
         plt.clf()
 
-    accX= []
-    accY= []
-    accZ= []
-    speed= []
-    time= []
+        plt.plot(np.arange(0, len(time), 1).tolist(), accY)
+        plt.title('Acceleartion Y over time stamp')
+        plt.xlabel('Time Stamp')
+        plt.savefig("Plots2020/" + driverId + "/" + tripId + "/accY.png")
+        plt.clf()
+
+        plt.plot(np.arange(0, len(time), 1).tolist(), accZ)
+        plt.title('Acceleartion Z over time stamp')
+        plt.xlabel('Time Stamp')
+        plt.savefig("Plots2020/" + driverId + "/" + tripId + "/accZ.png")
+        plt.clf()
+
+        if(speed):
+            plt.plot(np.arange(0, len(time), 1).tolist(), speed)
+            plt.title('Speed over time stamp')
+            plt.xlabel('Time Stamp')
+            plt.savefig("Plots2020/" + driverId + "/" + tripId + "/speed.png")
+            plt.clf()
+
+        accX= []
+        accY= []
+        accZ= []
+        speed= []
+        time= []
 
     print("Saved Plots for driver Id: " + driverId)
 

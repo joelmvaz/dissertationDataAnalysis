@@ -35,7 +35,7 @@ time= []
 timePlt= []
 #Hard Coded file name
 #File must be in the same folder as script
-filename= "droid-data-export-2020.json"
+filename= "droid-data-export-2020-2.json"
 
 with open(filename, 'r') as f:
     data= json.load(f)
@@ -90,31 +90,39 @@ for driverId in data:
         plt.figure()
         plt.xticks(rotation=45, ha='right')
         plt.plot(np.arange(0, len(time), 1).tolist(), accX)
-        plt.title('Acceleartion X over time stamp')
-        plt.xlabel('Time Stamp')
+        plt.title('Acceleration X')
+        plt.xlabel('Time Stamp s')
+        plt.ylabel('Acceleration m/s2')
 
     # Create new directory
     #output_dir= driverId
     #mkdir_p("Plots2020/" + output_dir)
+        plt.grid()
         plt.savefig("Plots2020/" + driverId + "/" + tripId +"/accX.png")
         plt.clf()
 
         plt.plot(np.arange(0, len(time), 1).tolist(), accY)
-        plt.title('Acceleartion Y over time stamp')
-        plt.xlabel('Time Stamp')
+        plt.title('Acceleration ')
+        plt.xlabel('Time Stamp s')
+        plt.ylabel('Acceleration Y m/s2')
+        plt.grid()
         plt.savefig("Plots2020/" + driverId + "/" + tripId + "/accY.png")
         plt.clf()
 
         plt.plot(np.arange(0, len(time), 1).tolist(), accZ)
-        plt.title('Acceleartion Z over time stamp')
-        plt.xlabel('Time Stamp')
+        plt.title('Acceleration Z')
+        plt.xlabel('Time Stamp s')
+        plt.ylabel('Acceleration z m/s2')
+        plt.grid()
         plt.savefig("Plots2020/" + driverId + "/" + tripId + "/accZ.png")
         plt.clf()
 
         if(speed):
             plt.plot(np.arange(0, len(time), 1).tolist(), speed)
-            plt.title('Speed over time stamp')
-            plt.xlabel('Time Stamp')
+            plt.title('Speed')
+            plt.xlabel('Time Stamp s')
+            plt.ylabel('Speed m/s')
+            plt.grid()
             plt.savefig("Plots2020/" + driverId + "/" + tripId + "/speed.png")
             plt.clf()
 
